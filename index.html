@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPARQL Query Interface</title>
+</head>
+<body>
+    <h1>Enter a movie</h1>
+    <h2>Visit the country where the movie was filmed</h2>
+    <input type="text" id="movie-name" placeholder="Enter movie name">
+    <button onclick="queryFilms()">Get Country</button>
+    <ul id="film-list"></ul>
+
+    <script>
+        function queryFilms() {
+            const movieName = document.getElementById('movie-name').value;
+            if (!movieName) {
+                alert("Please enter a movie name.");
+                return;
+            }
+
+            const sparqlEndpoint = 'https://dbpedia.org/sparql';
+            const query = `
+                PREFIX dbo: <http://dbpedia.org/ontology/>
+                SELECT DISTINCT ?countryStr WHERE {
+                    ?film a dbo:Film.
+                    ?film dbp:country ?country.
+                    ?film rdfs:label ?label.
+                    FILTER (CONTAINS(LCASE(STR(?label)), LCASE("${movieName}"))).
+                    BIND(STR(?country) AS ?countryStr)
+                }
+            `;
+
+            fetch(`${sparqlEndpoint}?query=${encodeURIComponent(query)}&format=json`)
+                .then(response => response.json())
+                .then(data => {
+                    const countries = data.results.bindings;
+                    const filmList = document.getElementById('film-list');
+                    filmList.innerHTML = '';  // Clear existing list
+                    countries.forEach(country => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = country.countryStr.value; // Display country name
+                        filmList.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Error querying SPARQL endpoint:', error));
+        }
+    </script>
+</body>
+</html>
