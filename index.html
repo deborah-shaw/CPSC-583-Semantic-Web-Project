@@ -47,9 +47,6 @@
                 })
                 .catch(error => console.error('Error querying SPARQL endpoint:', error));
 
-            fetch(`${sparqlEndpoint}?query=${encodeURIComponent(query)}&format=json`)
-                .then(response => response.json())
-                .then(data => {
 
         }
     </script>
