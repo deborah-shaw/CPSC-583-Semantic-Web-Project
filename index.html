@@ -51,8 +51,6 @@
                 .then(response => response.json())
                 .then(data => {
                     const countries = data.results.bindings;    // Bindings is a standard feature of SPARQL query responses when the result is in JSON format
-                    const filmList = document.getElementById('film-list');
-                    filmList.innerHTML = '';  // Clear existing list
                     countries.forEach(country => {
                     });
                 })
