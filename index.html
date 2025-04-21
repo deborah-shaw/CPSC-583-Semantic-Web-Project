@@ -50,8 +50,6 @@
             fetch(`${sparqlEndpoint}?query=${encodeURIComponent(query)}&format=json`)
                 .then(data => {
                     const countries = data.results.bindings;    // Bindings is a standard feature of SPARQL query responses when the result is in JSON format
-                    countries.forEach(country => {
-                    });
                 })
 
 
