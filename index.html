@@ -46,13 +46,20 @@
                     });
                 })
                 .catch(error => console.error('Error querying SPARQL endpoint:', error));
-
+            
             fetch(`${sparqlEndpoint}?query=${encodeURIComponent(query)}&format=json`)
+                .then(response => response.json())
                 .then(data => {
                     const countries = data.results.bindings;    // Bindings is a standard feature of SPARQL query responses when the result is in JSON format
+                    const filmList = document.getElementById('film-list');
+                    filmList.innerHTML = '';  // Clear existing list
+                    countries.forEach(country => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = country.countryStr.value; // Display country name
+                        filmList.appendChild(listItem);
+                    });
                 })
-
-
+                .catch(error => console.error('Error querying SPARQL endpoint:', error));
 
         }
     </script>
