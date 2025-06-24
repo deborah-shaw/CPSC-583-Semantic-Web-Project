@@ -140,7 +140,7 @@ const filmLocationForm = () => {
             <div class="col-md-6">
             <div class="col-12 mb-2">
                 <label for="inputFilm" class="form-label">Favorite movie</label>
-                <input type="text" class="form-control" id="inputFilm" required>
+                <input type="text" class="form-control" id="inputFilm" placeholder="Enter a movie title" required>
             </div>
             <div class="col-12">
                 <button id="filmform__submit" type="submit" class="btn btn-primary">Submit</button>
@@ -155,6 +155,8 @@ const filmLocationForm = () => {
 const render = () => {
     return (`
     <h1 class="text-center mt-4">Heads in the Cloud</h1>
+	<h5 class="text-center mt-4">Ever watched a movie and wondered <em><b>where</b></em> those stunning scenes were shot?</h5>
+    <h5 class="text-center">Explore film locations and start planning your next dream vacation to where the magic happened.</h5>
     <main>
        ${filmLocationForm()}
        <div class="container-sm mt-4" id="results"><div>
